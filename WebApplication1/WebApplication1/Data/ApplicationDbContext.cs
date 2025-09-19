@@ -15,26 +15,17 @@ namespace WebApplication1.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuración Order - User
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.User)
-                .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .Property(o => o.Total)
+                .HasPrecision(18, 2);
 
-            // Configuración OrderItem - Order
             modelBuilder.Entity<OrderItem>()
-                .HasOne(oi => oi.Order)
-                .WithMany(o => o.OrderItems)
-                .HasForeignKey(oi => oi.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .Property(oi => oi.PrecioUnitario)
+                .HasPrecision(18, 2);
 
-            // Configuración OrderItem - Product
-            modelBuilder.Entity<OrderItem>()
-                .HasOne(oi => oi.Product)
-                .WithMany(p => p.OrderItems)
-                .HasForeignKey(oi => oi.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Precio)
+                .HasPrecision(18, 2);
         }
     }
 }
